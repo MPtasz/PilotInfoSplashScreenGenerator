@@ -1,6 +1,6 @@
 # PilotInfoSplashScreenGenerator
 
-![PtaszWare Logo](https://github.com/MPtasz/PilotInfoSplashScreenGenerator/blob/main/assets/logos/PtasWareLogo190x197.png)
+![PtaszWare Logo](https://github.com/MPtasz/PilotInfoSplashScreenGenerator/blob/main/assets/Logos/PtasWareLogo190x197.png)
 
 **PtaszWare**
 
