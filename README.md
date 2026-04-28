@@ -33,3 +33,11 @@ Run the exacutable 'PilotInfoSplash.Exe' and the main screen will be displayed.
 
 ![Main Screen](https://github.com/MPtasz/PilotInfoSplashScreenGenerator/blob/main/assets/ScreenShots/PilotInfoSplashGen.png)
 
+
+
+
+
+
+Pressing the 'regulatory Guide' button will display the 'RC Pilot's Regulatory Guide'.
+
+![Regulatory Guide](https://github.com/MPtasz/PilotInfoSplashScreenGenerator/blob/main/assets/ScreenShots/PilotInfoSplashGenReg.png)
