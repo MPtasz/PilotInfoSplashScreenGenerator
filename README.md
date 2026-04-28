@@ -31,5 +31,5 @@ It can be any folder, no install needed, just manually download and place them i
 
 Run the exacutable 'PilotInfoSplash.Exe' and the main screen will be displayed.
 
-![File List](https://github.com/MPtasz/PilotInfoSplashScreenGenerator/blob/main/assets/ScreenShots/PilotInfoSplashGen.png)
+![Main Screen](https://github.com/MPtasz/PilotInfoSplashScreenGenerator/blob/main/assets/ScreenShots/PilotInfoSplashGen.png)
 
