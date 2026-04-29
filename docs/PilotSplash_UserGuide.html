@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EdgeTX Pilot Info Splash Screen Generator — User Guide v1.1.2</title>
+<style>
+  :root {
+    --navy:  #12203A;
+    --blue:  #007ACC;
+    --lgray: #F4F6F8;
+    --mgray: #D0D7DE;
+    --text:  #24292F;
+    --note-bg: #EEF6FF;
+    --note-border: #007ACC;
+    --warn-bg: #FFF8EE;
+    --warn-border: #CC7700;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: #fff;
+    line-height: 1.6;
+  }
+
+  /* ── Page layout ── */
+  .page { max-width: 900px; margin: 0 auto; padding: 40px 48px 80px; }
+
+  /* ── Cover ── */
+  .cover {
+    background: var(--navy);
+    color: #fff;
+    padding: 56px 48px 48px;
+    margin: -40px -48px 48px;
+  }
+  .cover h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+  .cover h1 span { color: #5BC4F5; }
+  .cover .sub  { font-size: 16px; margin-top: 8px; color: #A8C7E0; }
+  .cover .meta { font-size: 13px; margin-top: 16px; color: #8aabb8; }
+  .cover-intro {
+    background: rgba(255,255,255,0.08);
+    border-left: 4px solid var(--blue);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin-top: 32px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #d0e8f5;
+  }
+
+  /* ── TOC ── */
+  .toc { background: var(--lgray); border-radius: 6px; padding: 24px 28px; margin-bottom: 48px; }
+  .toc h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--navy); margin-bottom: 12px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin: 3px 0; }
+  .toc a  { color: var(--blue); text-decoration: none; font-size: 13.5px; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* ── Headings ── */
+  h1.section {
+    font-size: 22px; font-weight: 700; color: var(--navy);
+    border-bottom: 3px solid var(--blue);
+    padding-bottom: 8px; margin: 48px 0 20px;
+  }
+  h2.sub { font-size: 16px; font-weight: 700; color: var(--blue); margin: 28px 0 10px; }
+  h3.sub3 { font-size: 14px; font-weight: 700; color: #005580; margin: 18px 0 6px; }
+
+  /* ── Body text ── */
+  p { margin-bottom: 12px; }
+  ul, ol { padding-left: 24px; margin-bottom: 12px; }
+  li { margin: 4px 0; }
+
+  /* ── Note / warning boxes ── */
+  .note, .warn {
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .note { background: var(--note-bg); border-left: 4px solid var(--note-border); color: #003366; }
+  .warn { background: var(--warn-bg); border-left: 4px solid var(--warn-border); color: #7A4000; }
+  .note strong, .warn strong { display: block; margin-bottom: 2px; }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13.5px; }
+  th {
+    background: var(--navy); color: #fff; font-weight: 600;
+    padding: 9px 14px; text-align: left;
+  }
+  td { padding: 8px 14px; border-bottom: 1px solid var(--mgray); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--lgray); }
+  td:first-child { font-weight: 600; color: var(--navy); white-space: nowrap; }
+
+  /* ── Code ── */
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: var(--lgray); border: 1px solid var(--mgray);
+    padding: 1px 5px; border-radius: 3px; font-size: 12.5px;
+  }
+
+  /* ── Workflow steps ── */
+  .steps { counter-reset: step; list-style: none; padding-left: 0; }
+  .steps li {
+    counter-increment: step;
+    padding: 8px 12px 8px 48px;
+    position: relative;
+    border-left: 2px solid var(--mgray);
+    margin-left: 20px;
+    margin-bottom: 4px;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; left: -16px; top: 6px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--blue); color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Print ── */
+  @media print {
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    th     { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h1.section { page-break-before: always; }
+    h1.section:first-of-type { page-break-before: avoid; }
+    .toc { page-break-after: always; }
+  }
+
+  /* ── Divider ── */
+  hr { border: none; border-top: 1px solid var(--mgray); margin: 32px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══ COVER ═══════════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <h1>EdgeTX Pilot Info <span>Splash Screen Generator</span></h1>
+  <div class="sub">Version 1.1.2 &mdash; Complete User Guide</div>
+  <div class="meta">by Mark Ptaszynski &nbsp;|&nbsp; March 2026</div>
+  <div class="cover-intro">
+    The EdgeTX Pilot Info Splash Screen Generator is a Windows desktop application that creates
+    a personalised pilot identification card image (480&thinsp;&times;&thinsp;272&nbsp;pixels) for use as
+    the startup splash screen on EdgeTX colour-screen radio transmitters such as the RadioMaster
+    TX16S&nbsp;MK&nbsp;I/II. It displays your name, address, phone number, and regulatory identification
+    numbers (AMA, FAA, and TRUST) every time the radio powers on &mdash; providing an at-a-glance ID
+    card for field use. The program gives you full control over layout, colours, fonts, and a custom
+    background image, then saves the finished graphic directly to the radio SD card or to your PC.
+  </div>
+</div>
+
+<!-- ═══ TOC ═══════════════════════════════════════════════════════════════ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#s1">Overview of the Main Window</a></li>
+    <li><a href="#s2">Group 1 &mdash; Pilot Info File</a></li>
+    <li><a href="#s3">Group 2 &mdash; Pilot Data</a></li>
+    <li><a href="#s4">Group 3 &mdash; Appearance</a></li>
+    <li><a href="#s5">Right Column &mdash; Preview and Instructions</a></li>
+    <li><a href="#s6">Action Buttons</a></li>
+    <li><a href="#s7">Enter Pilot Information Dialog</a></li>
+    <li><a href="#s8">Regulatory Guide Window</a></li>
+    <li><a href="#s9">About Window</a></li>
+    <li><a href="#s10">Typical Workflows</a></li>
+    <li><a href="#s11">Splash Card Layout Reference</a></li>
+    <li><a href="#s12">Tips and Troubleshooting</a></li>
+    <li><a href="#s13">US Regulatory Quick Reference</a></li>
+    <li><a href="#sa">Appendix &mdash; Compatible Radio Models</a></li>
+  </ol>
+</div>
+
+<!-- ═══ SECTION 1 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s1">1. &nbsp;Overview of the Main Window</h1>
+<p>The main window is divided into two columns. The left column contains all controls, organised
+into three numbered groups. The right column shows the live preview and a built-in step-by-step
+instruction panel.</p>
+
+<table>
+  <tr><th style="width:50%">Left Column &mdash; Controls</th><th>Right Column &mdash; Preview &amp; Instructions</th></tr>
+  <tr>
+    <td style="font-weight:normal">
+      Group&nbsp;1 &mdash; Pilot Info File<br>
+      Group&nbsp;2 &mdash; Pilot Data<br>
+      Group&nbsp;3 &mdash; Appearance<br>
+      Save / Reset / About / Exit buttons<br>
+      Status bar
+    </td>
+    <td style="font-weight:normal">
+      Live 480&thinsp;&times;&thinsp;272 preview image<br>
+      Step-by-step instruction panel
+    </td>
+  </tr>
+</table>
+<div class="note">&#128161; Most controls update the preview automatically the moment you change them.
+The <strong>Re-Generate Preview</strong> button is only needed to force a manual refresh.</div>
+
+<!-- ═══ SECTION 2 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s2">2. &nbsp;Group 1 &mdash; Pilot Info File</h1>
+<p>This panel at the top of the left column is where you get pilot data into the program.
+There are three ways to load data from files and one way to enter it directly without a radio.</p>
+
+<h2 class="sub">2.1 &nbsp;Auto-Detect Button</h2>
+<p>Scans every logical drive connected to your PC looking for the file
+<code>SCRIPTS\TOOLS\PilotInfo.txt</code> &mdash; the file created on the SD card by the PilotInfo
+Lua script on the radio. When found, it reads all seven data fields, populates the Pilot Data
+panel, and immediately generates a preview.</p>
+<div class="note">&#9432; <strong>Before clicking Auto-Detect:</strong> Connect the radio via USB cable and on the radio
+screen select System Settings &rarr; USB Mode &rarr; USB Storage (SD). Wait for the drive to appear in
+Windows Explorer before clicking the button.</div>
+
+<h2 class="sub">2.2 &nbsp;Drive Text Box</h2>
+<p>Displays the drive root path found or selected, for example <code>E:\</code>. Set automatically
+by Auto-Detect or Browse.</p>
+
+<h2 class="sub">2.3 &nbsp;Browse&hellip; Button</h2>
+<p>Opens a Folder Browser dialog so you can manually navigate to the SD card root folder. Use this
+if Auto-Detect cannot find the drive &mdash; for example if the SD card is in a standalone card
+reader rather than in the radio.</p>
+
+<h2 class="sub">2.4 &nbsp;Open PilotInfo.Txt Button</h2>
+<p>Opens a file browser dialog so you can select any PilotInfo.txt file anywhere on your PC &mdash;
+no radio required. After selecting, data loads and the preview regenerates automatically. This is
+the fastest way to work when you have a previously saved PilotInfo.txt.</p>
+
+<h2 class="sub">2.5 &nbsp;Enter Pilot Info Button</h2>
+<p>Opens the Enter Pilot Information dialog (see Section&nbsp;7) where you type all seven fields
+directly. Use this when you have no radio or saved PilotInfo.txt available. After clicking OK the
+data loads and the preview regenerates.</p>
+
+<!-- ═══ SECTION 3 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s3">3. &nbsp;Group 2 &mdash; Pilot Data</h1>
+<p>This read-only panel shows the seven data fields that will appear on the splash card.
+Empty fields display in orange-red; loaded fields display in blue.</p>
+
+<table>
+  <tr><th>Field</th><th>Description &amp; Character Limits</th></tr>
+  <tr><td>Pilot Name</td><td>Your full name as it appears large and centred on the card. Maximum <strong>30</strong> characters.</td></tr>
+  <tr><td>Street Address</td><td>Street number and street name. Maximum <strong>50</strong> characters.</td></tr>
+  <tr><td>City / State / ZIP</td><td>City, state abbreviation, and ZIP code on one line. Maximum <strong>50</strong> characters.</td></tr>
+  <tr><td>Phone</td><td>Contact phone number. Suggested format: (xxx)&thinsp;xxx-xxxx. Maximum <strong>15</strong> characters.</td></tr>
+  <tr><td>AMA&nbsp;#</td><td>Academy of Model Aeronautics membership number. Maximum <strong>10</strong> characters.</td></tr>
+  <tr><td>FAA&nbsp;#</td><td>FAA drone registration number. Maximum <strong>15</strong> characters.</td></tr>
+  <tr><td>TRUST&nbsp;#</td><td>TRUST test certificate number issued by AMA. Maximum <strong>20</strong> characters.</td></tr>
+</table>
+<div class="warn">&#9888; The values shown here are display-only. To change them use <strong>Enter Pilot Info</strong>,
+<strong>Open PilotInfo.Txt</strong>, or <strong>Auto-Detect</strong>.</div>
+
+<!-- ═══ SECTION 4 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s4">4. &nbsp;Group 3 &mdash; Appearance</h1>
+<p>This is the main design studio for your splash card. It is divided into four sub-sections
+separated by horizontal lines. Almost every control updates the preview instantly.</p>
+
+<h2 class="sub">4.1 &nbsp;Background Sub-section</h2>
+
+<h3 class="sub3">Background Template text box</h3>
+<p>Shows the filename of the selected background image. When empty the built-in gradient design is
+used. Typing directly into this box also triggers a preview refresh.</p>
+
+<h3 class="sub3">Browse&hellip; Button (background template)</h3>
+<p>Opens a file dialog filtered to PNG, JPG, JPEG, and BMP. The chosen image is scaled to fill the
+480&thinsp;&times;&thinsp;272 canvas. A semi-transparent dark tint is then overlaid so all text remains readable
+regardless of the image content.</p>
+
+<h3 class="sub3">Clear Button (background template)</h3>
+<p>Removes the selected image and returns to the built-in gradient background immediately.</p>
+
+<h3 class="sub3">Background Color Button</h3>
+<p>Opens the Windows color picker for the background color used in the built-in gradient
+(default: dark navy <code>#12203A</code>). Has no visible effect when a template image is loaded.</p>
+
+<h3 class="sub3">Dark Tint Slider</h3>
+<p>Controls the opacity of a black overlay drawn over the background image. Slide left for a
+lighter, more image-visible result; slide right for darker, better text contrast.
+Range: 0% (no tint) to 100% (solid black). Default: approximately 63%.</p>
+<div class="note">&#9432; The Dark Tint slider only has an effect when a background template image is
+loaded. It does not affect the built-in gradient.</div>
+
+<h2 class="sub">4.2 &nbsp;Both Bands Color (Accent Color Button)</h2>
+<p>Opens the color picker and applies the chosen color to both the top accent band and the bottom
+ID band simultaneously. The quickest way to keep both bands matching. Individual band colors can
+then be fine-tuned separately using their own Set Color buttons.</p>
+
+<h2 class="sub">4.3 &nbsp;Top Accent Band Sub-section</h2>
+<p>The top band runs across the full card width at the very top and contains the title text
+&ldquo;PILOT&emsp;IDENTIFICATION&emsp;CARD&rdquo;.</p>
+<table>
+  <tr><th>Control</th><th>What it Does</th></tr>
+  <tr><td>Top accent band (checkbox)</td><td>Shows or hides the coloured band fill behind the title. The title text is always drawn regardless of this setting.</td></tr>
+  <tr><td>Set Color (top band)</td><td>Opens the color picker for the top band independently of the bottom band.</td></tr>
+  <tr><td>Opacity slider (top band)</td><td>Controls the transparency of the top band fill. 0% = fully transparent, 100% = fully opaque. Default: 100%. The percentage label updates in real time as you drag.</td></tr>
+  <tr><td>Top Accent Band Text (button)</td><td>Opens the Font dialog for the title text. Change font family, size, style, and color. Default: Segoe&nbsp;UI 14pt Bold, White.</td></tr>
+  <tr><td>Top Accent Label (button)</td><td>Opens the Font dialog for the small field labels (e.g. &ldquo;Street Address:&rdquo;) shown in the contact area when Show contact labels is ticked. Default: Segoe&nbsp;UI 8pt Regular, White.</td></tr>
+</table>
+
+<h2 class="sub">4.4 &nbsp;Body Text Sub-section</h2>
+<table>
+  <tr><th>Control</th><th>What it Does</th></tr>
+  <tr><td>Pilot Name Font (button)</td><td>Opens the Font dialog for the large pilot name text centred below the top band. Default: Segoe&nbsp;UI 22pt Bold, White. This is the most prominent element on the card.</td></tr>
+  <tr><td>Address / Phone Text (button)</td><td>Opens the Font dialog for the three contact lines: Street Address, City/State/ZIP, and Phone. Default: Segoe&nbsp;UI 11pt Regular, White.</td></tr>
+  <tr><td>Show contact field labels (checkbox)</td><td>When ticked, small labels (Street Address:, City / State / ZIP:, Phone:) appear to the left of each value. When unticked the values are centred on the card width.</td></tr>
+</table>
+
+<h2 class="sub">4.5 &nbsp;Bottom ID Band Sub-section</h2>
+<p>The bottom band spans the full card width across the lower portion and contains the three
+regulatory ID numbers: AMA&nbsp;#, FAA&nbsp;#, and TRUST&nbsp;#.</p>
+<table>
+  <tr><th>Control</th><th>What it Does</th></tr>
+  <tr><td>Bottom ID band (checkbox)</td><td>Shows or hides the coloured band fill behind the ID numbers.</td></tr>
+  <tr><td>Set Color (bottom band)</td><td>Opens the color picker for the bottom band independently of the top band.</td></tr>
+  <tr><td>Opacity slider (bottom band)</td><td>Controls the transparency of the bottom band fill. Default: 100%.</td></tr>
+  <tr><td>Bottom ID Band Text (button)</td><td>Opens the Font dialog for the AMA, FAA, and TRUST number values. Default: Segoe&nbsp;UI 13pt Bold, White.</td></tr>
+  <tr><td>Bottom ID Label (button)</td><td>Opens the Font dialog for the small label text above each number when Show ID labels is ticked. Default: Segoe&nbsp;UI 8.5pt Regular, White.</td></tr>
+  <tr><td>Show ID field labels (checkbox)</td><td>When ticked, a small label (AMA&nbsp;#:, FAA&nbsp;#:, TRUST&nbsp;#:) appears beside each number. When unticked the numbers are centred without labels.</td></tr>
+</table>
+
+<h2 class="sub">4.6 &nbsp;Layout Sub-section</h2>
+<p>Two radio buttons control how the three ID numbers are arranged in the bottom band. Only one
+may be selected at a time.</p>
+<table>
+  <tr><th>Option</th><th>Layout Description</th></tr>
+  <tr><td>Stacked (default)</td><td>AMA&nbsp;#, FAA&nbsp;#, and TRUST&nbsp;# are stacked vertically and centred on the card, one per line. Best for longer numbers.</td></tr>
+  <tr><td>3-column</td><td>AMA&nbsp;#, FAA&nbsp;#, and TRUST&nbsp;# are placed side by side in three equal columns separated by vertical divider lines. Best for shorter numbers.</td></tr>
+</table>
+
+<!-- ═══ SECTION 5 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s5">5. &nbsp;Right Column &mdash; Preview and Instructions</h1>
+
+<h2 class="sub">5.1 &nbsp;Preview Panel</h2>
+<p>Displays the splash card at its actual pixel dimensions: 480&thinsp;&times;&thinsp;272. This is exactly the size
+that will be written to the radio SD card. What you see is what you get.</p>
+<ul>
+  <li>The preview regenerates automatically when you change almost any control.</li>
+  <li>Placeholder dashes (&mdash;) appear for any field that has not been filled in yet.</li>
+  <li>Background images are auto-scaled to fill the full 480&thinsp;&times;&thinsp;272 area.</li>
+</ul>
+
+<h2 class="sub">5.2 &nbsp;Step-by-Step Instructions Panel</h2>
+<p>A large text panel below the preview contains a built-in quick-start guide. It describes the
+recommended workflow for connecting the radio, loading pilot data, customising the appearance, and
+saving the splash image. For reference only &mdash; you do not need to follow the steps in order.</p>
+
+<!-- ═══ SECTION 6 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s6">6. &nbsp;Action Buttons</h1>
+<table>
+  <tr><th>Button</th><th>What it Does</th></tr>
+  <tr><td>Save Pilot Info</td><td>Saves the seven pilot data fields to a PilotInfo.txt file on your PC. A message after saving gives you the three-step copy instructions for the radio. Disabled until pilot data has been loaded or entered.</td></tr>
+  <tr><td>Save Splash Screen</td><td>Saves the current 480&thinsp;&times;&thinsp;272 preview as a PNG file to your PC. Ready to be copied to <code>IMAGES\splash.png</code> on the SD card. Disabled until a preview has been generated.</td></tr>
+  <tr><td>Re-Generate Preview</td><td>Forces the preview to re-render. Under normal use this is not needed as controls update the preview automatically.</td></tr>
+  <tr><td>Reset Preview to Defaults</td><td>Resets every colour, font, opacity, checkbox, and layout setting back to factory defaults (EdgeTX navy and blue scheme). Pilot data is <strong>not</strong> cleared. The preview regenerates immediately.</td></tr>
+  <tr><td>Regulatory Guide</td><td>Opens the Regulatory Guide window (see Section&nbsp;8) with FAA, AMA, and club links and logos.</td></tr>
+  <tr><td>About</td><td>Opens the About window (see Section&nbsp;9) with version and author information.</td></tr>
+  <tr><td>Exit</td><td>Closes the program. Unsaved design changes are discarded. Files already saved to disk are unaffected.</td></tr>
+</table>
+
+<h2 class="sub">6.1 &nbsp;Status Bar</h2>
+<p>A text strip at the bottom of the window shows status messages as you work. Normal messages
+appear in dark text; errors appear in red. Examples:</p>
+<ul>
+  <li><code>SD card found at E:\ &mdash; loading pilot data&hellip;</code></li>
+  <li><code>Preview ready &mdash; click Save Splash Screen to write splash.png.</code></li>
+  <li><code>Pilot data saved to: C:\Users\&hellip;\PilotInfo.txt</code></li>
+  <li>Error messages in red when a drive is not found or a file cannot be read.</li>
+</ul>
+
+<!-- ═══ SECTION 7 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s7">7. &nbsp;Enter Pilot Information Dialog</h1>
+<p>Opens when you click <strong>Enter Pilot Info</strong>. Lets you type all seven data fields
+without needing a radio. Any data already loaded is pre-filled so you can edit rather than retype.</p>
+<p>Title bar: <em>&ldquo;Enter Pilot Information &mdash; No Radio Required&rdquo;</em></p>
+
+<table>
+  <tr><th>Field / Control</th><th>Details</th></tr>
+  <tr><td>Pilot Name</td><td>Text box. Maximum 30 characters.</td></tr>
+  <tr><td>Street Address</td><td>Text box. Maximum 50 characters.</td></tr>
+  <tr><td>City / State / ZIP</td><td>Text box. Maximum 50 characters.</td></tr>
+  <tr><td>Phone</td><td>Text box with placeholder <code>(xxx) xxx-xxxx</code>. Maximum 15 characters.</td></tr>
+  <tr><td>AMA&nbsp;#</td><td>Text box. Maximum 10 characters.</td></tr>
+  <tr><td>FAA&nbsp;#</td><td>Text box. Maximum 15 characters.</td></tr>
+  <tr><td>TRUST&nbsp;#</td><td>Text box. Maximum 20 characters.</td></tr>
+  <tr><td>OK</td><td>Saves all values, closes the dialog, updates the Pilot Data panel, and regenerates the preview.</td></tr>
+  <tr><td>Cancel</td><td>Closes the dialog with no changes made.</td></tr>
+</table>
+<div class="note">&#9432; Character limits are enforced by the text boxes &mdash; you cannot type beyond the limit.
+These limits match the field widths in PilotInfo.txt on the radio.</div>
+
+<!-- ═══ SECTION 8 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s8">8. &nbsp;Regulatory Guide Window</h1>
+<p>Opens when you click <strong>Regulatory Guide</strong>. A scrollable informational reference
+covering the US regulatory landscape for drone and RC aircraft pilots.</p>
+
+<h2 class="sub">8.1 &nbsp;Federal Aviation Administration (FAA) Group</h2>
+<p>Contains FAA and TRUST logos (each clickable) and the following links:</p>
+<ul>
+  <li><strong>FAA logo</strong> &mdash; opens the FAA DroneZone registration site (faadronezone-access.faa.gov)</li>
+  <li><strong>TRUST logo</strong> &mdash; opens the AMA TRUST test page (modelaircraft.org/trust)</li>
+  <li><strong>Take The TRUST Test</strong> &mdash; direct link to the TRUST test</li>
+  <li><strong>Register Your Drone</strong> &mdash; direct link to FAA DroneZone</li>
+  <li><strong>Remote ID</strong> &mdash; FAA Remote ID information page</li>
+  <li><strong>Remote ID ToolKit</strong> &mdash; FAA Remote ID toolkit resource page</li>
+  <li><strong>FRIAs</strong> &mdash; FAA information on FAA-Recognized Identification Areas</li>
+  <li><strong>FRIAs ToolKit</strong> &mdash; FAA FRIA toolkit resource page</li>
+</ul>
+<div class="note">&#9432; <strong>TRUST</strong> (The Recreational UAS Safety Test) is required for all recreational drone
+and RC aircraft pilots in the USA. It is free and takes about 30 minutes to complete online. Your
+TRUST&nbsp;# is what appears in the TRUST # field on your splash card.</div>
+
+<h2 class="sub">8.2 &nbsp;Academy of Model Aeronautics (AMA) Group</h2>
+<p>Contains AMA and FRIA logos (each clickable) and the following links:</p>
+<ul>
+  <li><strong>AMA logo</strong> &mdash; opens the AMA website (modelaircraft.org)</li>
+  <li><strong>FRIA logo</strong> &mdash; opens the FAA FRIA page</li>
+  <li><strong>AMA Membership</strong> &mdash; link to AMA membership options and sign-up</li>
+  <li><strong>AMA WebSite</strong> &mdash; link to the main AMA website</li>
+</ul>
+
+<h2 class="sub">8.3 &nbsp;Local AMA Clubs Group</h2>
+<table>
+  <tr><th>Club</th><th>Links</th></tr>
+  <tr><td>Anoka County RC (ACRC)</td><td>Logo image (opens website) &nbsp;&middot;&nbsp; ACRC Website &nbsp;&middot;&nbsp; ACRC Facebook</td></tr>
+  <tr><td>St. Paul Model RC (SPMRC)</td><td>Logo image (opens translated site) &nbsp;&middot;&nbsp; SPMRC Website &nbsp;&middot;&nbsp; SPMRC Facebook</td></tr>
+  <tr><td>Grassfield RC</td><td>Logo image (opens website) &nbsp;&middot;&nbsp; Grassfield Website &nbsp;&middot;&nbsp; Grassfield Facebook</td></tr>
+</table>
+
+<h2 class="sub">8.4 &nbsp;Close Button</h2>
+<p>Closes the Regulatory Guide window and returns to the main window.</p>
+
+<!-- ═══ SECTION 9 ═══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s9">9. &nbsp;About Window</h1>
+<p>Opens when you click <strong>About</strong>. Displays the program version (1.1.2), author name
+(Mark Ptaszynski), creation date (March 2026), and a brief program description alongside a logo
+image. A <strong>Close</strong> button dismisses the window.</p>
+
+<!-- ═══ SECTION 10 ══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s10">10. &nbsp;Typical Workflows</h1>
+
+<h2 class="sub">10.1 &nbsp;First-Time Setup with Radio Connected</h2>
+<ol class="steps">
+  <li>Connect the radio to your PC via USB cable.</li>
+  <li>On the radio screen select System Settings &rarr; USB Mode &rarr; USB Storage (SD).</li>
+  <li>Wait for the SD card drive to appear in Windows Explorer.</li>
+  <li>Launch the EdgeTX Pilot Info Splash Screen Generator.</li>
+  <li>Click <strong>Auto-Detect</strong>. If the SD card is found, pilot data loads and the preview generates.</li>
+  <li>If Auto-Detect fails, click <strong>Browse&hellip;</strong> and navigate to the SD card root drive.</li>
+  <li>Review the Pilot Data panel. If values are wrong, click <strong>Enter Pilot Info</strong> to correct them.</li>
+  <li>Customise the appearance using the Group&nbsp;3 controls (Section&nbsp;4).</li>
+  <li>When satisfied with the preview, click <strong>Save Splash Screen</strong> and save.</li>
+  <li>Copy splash.png to <code>IMAGES\</code> on the SD card if you did not save directly to the card.</li>
+  <li>Safely eject the SD card drive in Windows, then disconnect the USB cable.</li>
+  <li>Power cycle the radio to see your new splash screen.</li>
+</ol>
+
+<h2 class="sub">10.2 &nbsp;Designing Without a Radio</h2>
+<ol class="steps">
+  <li>Launch the program.</li>
+  <li>Click <strong>Enter Pilot Info</strong>, fill in all seven fields, then click OK.</li>
+  <li>Customise the appearance using the Group&nbsp;3 controls.</li>
+  <li>Click <strong>Save Splash Screen</strong> to save the image to your PC.</li>
+  <li>Click <strong>Save Pilot Info</strong> to save a PilotInfo.txt file to your PC.</li>
+  <li>When you connect the radio later, copy splash.png to <code>IMAGES\</code> and PilotInfo.txt to <code>SCRIPTS\TOOLS\</code> on the SD card.</li>
+</ol>
+
+<h2 class="sub">10.3 &nbsp;Updating an Existing Splash Screen</h2>
+<ol class="steps">
+  <li>Load your previous PilotInfo.txt using <strong>Open PilotInfo.Txt</strong> or <strong>Auto-Detect</strong>.</li>
+  <li>Adjust any appearance settings that need updating.</li>
+  <li>Click <strong>Save Splash Screen</strong> to overwrite the previous file.</li>
+</ol>
+
+<!-- ═══ SECTION 11 ══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s11">11. &nbsp;Splash Card Layout Reference</h1>
+<p>The 480&thinsp;&times;&thinsp;272 canvas is divided into four horizontal zones:</p>
+<table>
+  <tr><th>Zone (Y pixels)</th><th>Content</th></tr>
+  <tr><td>0 &ndash; 44 px</td><td><strong>Top Accent Band</strong> &mdash; &ldquo;PILOT&emsp;IDENTIFICATION&emsp;CARD&rdquo; title, centred horizontally.</td></tr>
+  <tr><td>44 &ndash; 104 px</td><td><strong>Name Area</strong> &mdash; Pilot name in large bold font, centred horizontally.</td></tr>
+  <tr><td>104 &ndash; 196 px</td><td><strong>Contact Area</strong> &mdash; Street Address, City/State/ZIP, and Phone. Labels optional.</td></tr>
+  <tr><td>196 &ndash; 272 px</td><td><strong>Bottom ID Band</strong> &mdash; AMA&nbsp;#, FAA&nbsp;#, and TRUST&nbsp;# in stacked or 3-column layout.</td></tr>
+</table>
+<div class="note">&#9432; The 480&thinsp;&times;&thinsp;272 resolution matches the TX16S MK&nbsp;I and MK&nbsp;II screens. The TX16S
+MK&nbsp;III / MAX uses 800&thinsp;&times;&thinsp;480 and is not directly supported without source code changes.</div>
+
+<!-- ═══ SECTION 12 ══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s12">12. &nbsp;Tips and Troubleshooting</h1>
+
+<h2 class="sub">12.1 &nbsp;SD Card Not Found by Auto-Detect</h2>
+<ul>
+  <li>Confirm you selected <strong>USB Storage (SD)</strong> on the radio, not USB MIDI or another mode.</li>
+  <li>Give Windows 10&ndash;15 seconds to register the drive, then try again.</li>
+  <li>Open Windows Explorer and confirm the drive letter appears. If so, use <strong>Browse&hellip;</strong> to select it manually.</li>
+  <li>Try a different USB cable or port if the drive never appears in Explorer.</li>
+</ul>
+
+<h2 class="sub">12.2 &nbsp;PilotInfo.txt Not Found on the SD Card</h2>
+<ul>
+  <li>The file is only created after the PilotInfo.lua script has been run at least once on the radio via the Tools menu.</li>
+  <li>If the Lua script has not been run yet, use <strong>Enter Pilot Info</strong> or <strong>Open PilotInfo.Txt</strong> instead.</li>
+</ul>
+
+<h2 class="sub">12.3 &nbsp;Text is Clipped or Overflows in the Preview</h2>
+<ul>
+  <li>Try a slightly smaller font size via the <strong>Pilot Name Font</strong> or <strong>Address / Phone Text</strong> buttons.</li>
+  <li>Keep values within the character limits shown in the Enter Pilot Info dialog.</li>
+</ul>
+
+<h2 class="sub">12.4 &nbsp;Background Image Looks Very Dark</h2>
+<ul>
+  <li>Reduce the <strong>Dark Tint</strong> slider &mdash; drag it left to lower the percentage.</li>
+  <li>The tint is intentional to ensure white text is readable over any photograph.</li>
+</ul>
+
+<h2 class="sub">12.5 &nbsp;Preview Does Not Refresh After a Change</h2>
+<ul>
+  <li>Click <strong>Re-Generate Preview</strong> to force a manual refresh.</li>
+  <li>Check the Status bar for an error message shown in red.</li>
+</ul>
+
+<h2 class="sub">12.6 &nbsp;Save Splash Screen Button is Disabled</h2>
+<ul>
+  <li>The button enables only after a successful preview render. Click <strong>Re-Generate Preview</strong> first.</li>
+</ul>
+
+<h2 class="sub">12.7 &nbsp;Colors Look Different on the Radio vs. the Preview</h2>
+<ul>
+  <li>The radio LCD may render colors differently to a PC monitor due to its display technology.</li>
+  <li>Choose colors with strong contrast for best readability in bright sunlight at the flying field.</li>
+</ul>
+
+<!-- ═══ SECTION 13 ══════════════════════════════════════════════════════════ -->
+<h1 class="section" id="s13">13. &nbsp;US Regulatory Quick Reference</h1>
+<p>All recreational drone and RC aircraft pilots in the United States need the following:</p>
+<table>
+  <tr><th>Requirement</th><th>Details</th></tr>
+  <tr><td>AMA&nbsp;#</td><td>AMA membership number. Provides liability insurance and FAA community-based organisation recognition. Obtain at <strong>modelaircraft.org/membership</strong>.</td></tr>
+  <tr><td>FAA&nbsp;#</td><td>FAA drone registration number. Required for aircraft over 0.55&nbsp;lbs (250&nbsp;g). A fee applies. Register at <strong>faadronezone-access.faa.gov</strong>.</td></tr>
+  <tr><td>TRUST&nbsp;#</td><td>The Recreational UAS Safety Test certificate number. Free, online, approximately 30 minutes. Take the test at <strong>modelaircraft.org/trust</strong>.</td></tr>
+</table>
+<div class="warn">&#9888; Regulations change. Always check the FAA website for the most current requirements
+before flying. The information above is provided as a convenience only.</div>
+
+<!-- ═══ APPENDIX ══════════════════════════════════════════════════════════════ -->
+<h1 class="section" id="sa">Appendix &mdash; Compatible Radio Models</h1>
+<p>The program generates a 480&thinsp;&times;&thinsp;272 pixel PNG by default, matching these radios:</p>
+<ul>
+  <li>RadioMaster TX16S MK I</li>
+  <li>RadioMaster TX16S MK II</li>
+  <li>RadioMaster TX16S MK II MAX</li>
+  <li>RadioMaster Boxer</li>
+  <li>RadioMaster Pocket</li>
+  <li>Jumper T16</li>
+  <li>Jumper T18</li>
+</ul>
+<p>Radios with different screen resolutions (such as the TX16S MK&nbsp;III / MAX at
+800&thinsp;&times;&thinsp;480) are not directly supported without modifying the <code>SPLASH_W</code>
+and <code>SPLASH_H</code> constants in the program source code.</p>
+
+<hr>
+<p style="font-size:12px;color:#999;text-align:center;margin-top:32px">
+  EdgeTX Pilot Info Splash Screen Generator v1.1.2 &nbsp;&mdash;&nbsp; User Guide &nbsp;&mdash;&nbsp; by Mark Ptaszynski &nbsp;&mdash;&nbsp; March 2026
+</p>
+
+</div><!-- .page -->
+</body>
+</html>
